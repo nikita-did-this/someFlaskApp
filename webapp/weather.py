@@ -1,25 +1,16 @@
-from dotenv import load_dotenv
-import os
+from flask import current_app
 import requests
 
-load_dotenv()
 
-
-class Config(object):
-    WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
-    WEATHER_DEFAULT_CITY = os.getenv("WEATHER_DEFAULT_CITY")
-    WEATHER_URL = os.getenv("WEATHER_URL")
-
-
-def weather_by_city(city_name=Config.WEATHER_DEFAULT_CITY):
+def weather_by_city(city_name):
     geo_data = {
-        "key": Config.WEATHER_API_KEY,
+        "key": current_app.config['WEATHER_API_KEY'],
         "q": city_name,
         "format": "json",
         "num_of_days": 1,
         "lang": "ru"
     }
-    weather_url = Config.WEATHER_URL
+    weather_url = current_app.config['WEATHER_URL']
     try:
         result = requests.get(weather_url, params=geo_data)
         result.raise_for_status()
@@ -34,8 +25,3 @@ def weather_by_city(city_name=Config.WEATHER_DEFAULT_CITY):
         print('Сетевая ошибка')
         return False
     return False
-
-
-if __name__ == "__main__":
-    print(weather_by_city())
-

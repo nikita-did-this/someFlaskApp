@@ -18,7 +18,7 @@
                         <h3>
                             <a href="{{ obj.url }}">{{ obj.title }}</a>
                         </h3>
-                        <p><time datetime="{{ obj.published }}">{{ obj.published }}</time></p>
+                        <p><time datetime="{{ obj.published }}">{{ obj.published.strftime('%d.%m.%Y') }}</time></p>
                     <hr>
                     {% endfor %}
                 </div>
