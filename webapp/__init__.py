@@ -23,7 +23,6 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-
     @app.route("/")
     def index():
         page_title = "Новости Python"
@@ -33,7 +32,7 @@ def create_app():
 
     @app.route("/login")  # Авторизация пользователя и переадресация на заглавную страницу
     def login():
-        if current_user.is_authenticated: #Проверка на авторизацию
+        if current_user.is_authenticated:  # Проверка на авторизацию
             return redirect(url_for('index'))
         page_title = "Авторизация"
         login_form = LoginForm()
@@ -43,10 +42,10 @@ def create_app():
     def process_login():
         form = LoginForm()
 
-        if form.validate_on_submit(): #Валидация формы на предмет ошибок
+        if form.validate_on_submit():  # Валидация формы на предмет ошибок
             user = User.query.filter_by(name=form.username.data).first()
-            if user and user.check_password(form.password.data): #Проверка существования пользователя и верности введенного пароля
-                login_user(user) #Логин пользователя
+            if user and user.check_password(form.password.data): # Проверка существования пользователя и верности введенного пароля
+                login_user(user)  # Логин пользователя
                 flash("Вы вошли на сайт")
                 return redirect(url_for('index'))  # Переадресация на главную страницу
 
@@ -60,7 +59,6 @@ def create_app():
             return 'Привет Админ'
         else:
             return 'Ты не Админ!'
-
 
     @app.route('/logout')
     def logout():  # Выход из учетной записи и переадресация на заглавную страницу

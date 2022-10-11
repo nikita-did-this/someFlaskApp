@@ -15,6 +15,7 @@ class News(db.Model):
     def __repr__(self):
         return f"<News {self.title} {self.url}>"
 
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
@@ -24,7 +25,7 @@ class User(db.Model, UserMixin):
     def set_password(self, user_password):
         self.password = generate_password_hash(user_password)
 
-    def check_password (self, hash_password):
+    def check_password(self, hash_password):
         return check_password_hash(self.password, hash_password)
 
     @property  # Декоратор позволяет вызывать метод как атрибут (без скобочек)
