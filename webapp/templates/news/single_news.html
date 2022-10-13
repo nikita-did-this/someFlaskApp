@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-8 news-content">
+            {{ news.text|safe }}
+        </div>
+    </div>
+{% endblock %}
+</html>
