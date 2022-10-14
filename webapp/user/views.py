@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, render_template, redirect, url_for
+from flask import Blueprint, flash, render_template, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user
 
 from webapp.db import db
@@ -61,7 +61,7 @@ def process_login():
         if user and user.check_password(form.password.data):  # Проверка существования пользователя и верности введенного пароля,
             login_user(user,remember=form.remember_me.data)  # Логин пользователя, проверка функционала запоминнания в куках
             flash("Вы вошли на сайт")
-            return redirect(url_for('news.index'))  # Переадресация на главную страницу
+            return redirect(url_for('news.index', next=request.endpoint))  # Переадресация на главную страницу
 
         flash('Неправильное имя пользователя или пароль')
-        return redirect(url_for('user.login'))  # Переадресация на повторную авторизацию в случае несовпадения данных с данными в бд
+        return redirect(url_for('user.login', next=request.full_path))  # Переадресация на повторную авторизацию в случае несовпадения данных с данными в бд

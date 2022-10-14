@@ -3,23 +3,14 @@
 {% block content %}
     <div class="row">
         <div class="col-8">
-            <div class="col-4">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <div class="alert alert-warning" role="alert">
-                        {% for message in messages %}
-                            {{ message }}<br>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %}
-            </div>
+            {% include('messages.html') %}
             <h2>Новости</h2>
             {% for obj in news  %}
                 <h3>
                     <a href="{{ url_for('news.single_news', news_id=obj.id) }}">{{ obj.title }}</a>
                 </h3>
-                <p><time datetime="{{ obj.published }}">{{ obj.published.strftime('%d.%m.%Y') }}</time></p>
+                <p><time datetime="{{ obj.published }}">{{ obj.published.strftime('%d.%m.%Y') }}</time> | Комментарии:
+                    {{obj.comments_count()}}</p>
             <hr>
             {% endfor %}
         </div>
