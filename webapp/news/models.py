@@ -1,4 +1,6 @@
+from datetime import datetime
 from webapp.db import db
+
 
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -9,3 +11,18 @@ class News(db.Model):
 
     def __repr__(self):
         return f"<News {self.title} {self.url}>"
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    news_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id', ondelete='CASCADE'),
+        index=True
+    )
+
+    def __repr__(self):
+        return f"<Комментарий {self.id}>"
+
